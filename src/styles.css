@@ -1,0 +1,238 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-neon-green: var(--neon-green);
+  --color-neon-gold: var(--neon-gold);
+  --color-neon-red: var(--neon-red);
+  --color-cream: var(--cream);
+  --font-display: "Bebas Neue", "Anton", sans-serif;
+  --font-script: "Caveat Brush", "Permanent Marker", cursive;
+  --font-body: "Manrope", "Inter", sans-serif;
+}
+
+:root {
+  --radius: 0.75rem;
+
+  /* Bamboo House palette */
+  --neon-green: oklch(0.86 0.30 145);   /* #39FF14-ish */
+  --neon-gold: oklch(0.85 0.18 85);     /* warm yellow gold */
+  --neon-red: oklch(0.68 0.24 25);      /* logo red */
+  --cream: oklch(0.95 0.04 90);         /* menu beige */
+  --ink: oklch(0.35 0.15 25);           /* menu deep red */
+
+  --background: oklch(0.14 0.02 140);   /* very dark bamboo-black */
+  --foreground: oklch(0.96 0.02 90);
+  --card: oklch(0.18 0.025 140);
+  --card-foreground: oklch(0.96 0.02 90);
+  --popover: oklch(0.18 0.025 140);
+  --popover-foreground: oklch(0.96 0.02 90);
+  --primary: var(--neon-green);
+  --primary-foreground: oklch(0.12 0.02 140);
+  --secondary: oklch(0.22 0.04 140);
+  --secondary-foreground: oklch(0.96 0.02 90);
+  --muted: oklch(0.22 0.03 140);
+  --muted-foreground: oklch(0.75 0.04 90);
+  --accent: var(--neon-gold);
+  --accent-foreground: oklch(0.12 0.02 140);
+  --destructive: var(--neon-red);
+  --destructive-foreground: oklch(0.98 0 0);
+  --border: oklch(0.30 0.05 140 / 60%);
+  --input: oklch(0.25 0.04 140);
+  --ring: var(--neon-green);
+}
+
+.dark {
+  --background: oklch(0.14 0.02 140);
+  --foreground: oklch(0.96 0.02 90);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html,
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-body);
+  }
+
+  body {
+    background-image:
+      radial-gradient(ellipse 80% 50% at 20% 0%, color-mix(in oklab, var(--neon-green) 12%, transparent), transparent 60%),
+      radial-gradient(ellipse 70% 50% at 90% 30%, color-mix(in oklab, var(--neon-red) 14%, transparent), transparent 60%),
+      radial-gradient(ellipse 80% 60% at 50% 100%, color-mix(in oklab, var(--neon-gold) 10%, transparent), transparent 60%);
+    background-attachment: fixed;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    letter-spacing: 0.02em;
+  }
+}
+
+@utility neon-green-text {
+  color: var(--neon-green);
+  text-shadow:
+    0 0 6px color-mix(in oklab, var(--neon-green) 80%, transparent),
+    0 0 18px color-mix(in oklab, var(--neon-green) 55%, transparent),
+    0 0 40px color-mix(in oklab, var(--neon-green) 35%, transparent);
+}
+
+@utility neon-gold-text {
+  color: var(--neon-gold);
+  text-shadow:
+    0 0 6px color-mix(in oklab, var(--neon-gold) 80%, transparent),
+    0 0 18px color-mix(in oklab, var(--neon-gold) 55%, transparent),
+    0 0 40px color-mix(in oklab, var(--neon-gold) 35%, transparent);
+}
+
+@utility neon-red-text {
+  color: var(--neon-red);
+  text-shadow:
+    0 0 6px color-mix(in oklab, var(--neon-red) 80%, transparent),
+    0 0 18px color-mix(in oklab, var(--neon-red) 55%, transparent),
+    0 0 40px color-mix(in oklab, var(--neon-red) 35%, transparent);
+}
+
+/* Neon-tube text: transparent fill clipped to a solid-black background, plus
+   neon-colored outline + glow. Letters read as black-filled with a glowing
+   neon edge — the “background of the letters” is fully black, the rest of
+   the box stays transparent. */
+@utility neon-outline-green {
+  color: transparent;
+  background-color: #000;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-stroke: 1px var(--neon-green);
+  filter:
+    drop-shadow(0 0 4px color-mix(in oklab, var(--neon-green) 75%, transparent))
+    drop-shadow(0 0 10px color-mix(in oklab, var(--neon-green) 45%, transparent));
+}
+
+@utility neon-outline-gold {
+  color: transparent;
+  background-color: #000;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-stroke: 1px var(--neon-gold);
+  filter:
+    drop-shadow(0 0 4px color-mix(in oklab, var(--neon-gold) 75%, transparent))
+    drop-shadow(0 0 10px color-mix(in oklab, var(--neon-gold) 45%, transparent));
+}
+
+@utility neon-box-green {
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, var(--neon-green) 70%, transparent),
+    0 0 18px color-mix(in oklab, var(--neon-green) 35%, transparent),
+    inset 0 0 12px color-mix(in oklab, var(--neon-green) 12%, transparent);
+}
+
+@utility neon-box-gold {
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, var(--neon-gold) 70%, transparent),
+    0 0 18px color-mix(in oklab, var(--neon-gold) 35%, transparent),
+    inset 0 0 12px color-mix(in oklab, var(--neon-gold) 12%, transparent);
+}
+
+@utility neon-box-red {
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, var(--neon-red) 70%, transparent),
+    0 0 18px color-mix(in oklab, var(--neon-red) 35%, transparent),
+    inset 0 0 12px color-mix(in oklab, var(--neon-red) 12%, transparent);
+}
+
+@utility bamboo-grid {
+  background-image:
+    linear-gradient(to right, color-mix(in oklab, var(--neon-green) 8%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in oklab, var(--neon-green) 8%, transparent) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+@keyframes neon-flicker {
+  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+    opacity: 1;
+    filter: drop-shadow(0 0 10px color-mix(in oklab, var(--neon-green) 60%, transparent));
+  }
+  20%, 24%, 55% {
+    opacity: 0.85;
+    filter: drop-shadow(0 0 2px color-mix(in oklab, var(--neon-green) 30%, transparent));
+  }
+}
+
+@utility flicker {
+  animation: neon-flicker 6s infinite;
+}
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@utility float-slow {
+  animation: float-slow 6s ease-in-out infinite;
+}
+
+/* Reduced motion: dampen neon glow + outline filters, pause flicker/float,
+   disable smooth scrolling, and shorten all transitions/animations. Layout
+   metrics (font-size, padding, header height, anchor offsets) are untouched. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  html .flicker,
+  html .float-slow {
+    animation: none !important;
+  }
+
+  html .neon-outline-green,
+  html .neon-outline-gold {
+    filter: none !important;
+  }
+
+  html .neon-green-text,
+  html .neon-gold-text,
+  html .neon-red-text {
+    text-shadow: none !important;
+  }
+
+}
+
